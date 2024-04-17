@@ -1,0 +1,26 @@
+Suffix array 
+
+S = ababba 
+
+Sorted suffixes 
+1. a
+2. ababba
+3. abba 
+4. ba 
+5. babba
+6. bba
+
+Total length n^2. We can make this with indexes 
+
+S = ababba$
+    0123456
+  2^k <= n        
+6 $        
+5 a$       
+0 ababba$  
+2 abba$    
+4 ba$      
+1 babba$   
+3 bba$     
+▲          
+p          
