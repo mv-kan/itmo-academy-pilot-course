@@ -48,6 +48,10 @@ func Solution2(s string) []int {
 		for i := 0; i < n; i++ {
 			p[i] = (p[i] - 1<<k + n) % n
 		}
+		c2 := make([]int, n)
+		for i := 0; i < n; i++ {
+			c2[i] = c[p[i]]
+		}
 		k++
 	}
 	return p
