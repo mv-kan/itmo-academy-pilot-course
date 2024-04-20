@@ -43,15 +43,54 @@ func Solution2(s string) []int {
 			}
 		}
 	}
+	pSort := func(p []int, c []int) []int {
+		n := len(p)
+		count := make([]int, n)
+		for _, v := range c {
+			count[v]++
+		}
+		pos := make([]int, n)
+		pos[0] = 0
+		for i := 1; i < n; i++ {
+			pos[i] = pos[i-1] + count[i-1]
+		}
+		pCopy := make([]int, n)
+		for _, v := range p {
+			i := c[v]
+			pCopy[pos[i]] = v
+			pos[i]++
+		}
+		return pCopy
+	}
 	k := 0
 	for 1<<k < n {
 		for i := 0; i < n; i++ {
 			p[i] = (p[i] - 1<<k + n) % n
 		}
-		c2 := make([]int, n)
-		for i := 0; i < n; i++ {
-			c2[i] = c[p[i]]
+
+		p = pSort(p, c)
+
+		cNew := make([]int, n)
+		cNew[p[0]] = 0
+		for i := 1; i < n; i++ {
+			type pair struct {
+				a, b int
+			}
+			prev := pair{
+				a: c[p[i-1]],
+				b: c[(p[i-1]+1<<k)%n],
+			}
+			now := pair{
+				a: c[p[i]],
+				b: c[(p[i]+1<<k)%n],
+			}
+			if now == prev {
+				cNew[p[i]] = cNew[p[i-1]]
+			} else {
+				cNew[p[i]] = cNew[p[i-1]] + 1
+			}
 		}
+		c = cNew
 		k++
 	}
 	return p
@@ -83,19 +122,18 @@ func radixSort(a []int) []int {
 }
 
 func Solution2Main() {
-	s := "ababba"
-	n := len(s)
-	// fmt.Scanf("%s", &s)
+	s := ""
+	fmt.Scanf("%s", &s)
 	a := Solution2(s)
-	for i := 0; i < n; i++ {
+	for i := 0; i < len(a); i++ {
 		fmt.Printf("%d ", a[i])
 	}
 	fmt.Println()
-	// show with substr
-	s += "$"
-	for i := 0; i < n; i++ {
-		fmt.Printf("%d\t%s", a[i], s[a[i]:])
-		fmt.Println()
-	}
-	fmt.Println()
+	// // show with substr
+	// s += "$"
+	// for i := 0; i < n+1; i++ {
+	// 	fmt.Printf("%d\t%s", a[i], s[a[i]:])
+	// 	fmt.Println()
+	// }
+	// fmt.Println()
 }
