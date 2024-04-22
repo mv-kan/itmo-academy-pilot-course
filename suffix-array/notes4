@@ -1,0 +1,14 @@
+LCP - longest common prefix
+
+lcp(i, j) = min( lcp(pos[i] .. pos[j]) )
+
+we have minimum on the segment
+to answer this questions we can use 2 data structure
+
+                build (memory)     query
+Seg. Tree       n                  log n 
+Sparse Table    n log n            1
+
+lcp[i] = lcp(s[p[i]:n], s[p[i+1:n]])
+
+To build lcp we will use algo of Kasai Arimura Arikawa Lee and Park (Linear Time Longest Common Prefix)
