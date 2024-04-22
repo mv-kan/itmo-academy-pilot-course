@@ -60,12 +60,12 @@ func Solution3_2(s string, substrs ...string) []int {
 		}
 		return 0
 	}
-	count := func(idxs []int, s string, substr string) int {
-		s += "$"
+	findBegin := func(idxs []int, s string, substr string) int {
 		n := len(substr)
 		start := 0
 		end := len(s) - 1
 		mid := int((len(s) + 1) / 2)
+		resultIdx := -1
 		for {
 			sub := s[idxs[mid]:]
 			comp := compare(sub, substr, n)
@@ -82,19 +82,60 @@ func Solution3_2(s string, substrs ...string) []int {
 				start = mid
 				mid += (end - start + 1) / 2
 			} else {
-				result := 1
-				for i := mid - 1; i >= 0 && compare(s[idxs[i]:], substr, n) == 0; i-- {
-					result++
+				if resultIdx == mid {
+					break
 				}
-				for i := mid + 1; i < len(idxs) && compare(s[idxs[i]:], substr, n) == 0; i++ {
-					result++
-				}
-				return result
+				start = 0
+				end = mid
+				resultIdx = mid
+				mid -= (end - start + 1) / 2
 			}
 		}
-		return 0
+		return resultIdx
+	}
+	findEnd := func(idxs []int, s string, substr string) int {
+		n := len(substr)
+		start := 0
+		end := len(s) - 1
+		mid := int((len(s) + 1) / 2)
+		resultIdx := -1
+		for {
+			sub := s[idxs[mid]:]
+			comp := compare(sub, substr, n)
+			if comp == -1 {
+				if mid == end {
+					break
+				}
+				end = mid
+				mid -= (end - start + 1) / 2
+			} else if comp == 1 {
+				if mid == start {
+					break
+				}
+				start = mid
+				mid += (end - start + 1) / 2
+			} else {
+				if resultIdx == mid {
+					break
+				}
+				start = mid
+				end = len(s) - 1
+				resultIdx = mid
+				mid += (end - start + 1) / 2
+			}
+		}
+		return resultIdx
+	}
+	count := func(idxs []int, s string, substr string) int {
+		begin := findBegin(idxs, s, substr)
+		if begin == -1 {
+			return 0
+		}
+		end := findEnd(idxs, s, substr)
+		return end - begin + 1
 	}
 	answs := make([]int, len(substrs))
+	s += "$"
 	for i, substr := range substrs {
 		answs[i] = count(idxs, s, substr)
 	}
@@ -102,8 +143,8 @@ func Solution3_2(s string, substrs ...string) []int {
 }
 
 func Solution3_2Main() {
-	// s := "aaa"
-	// substrs := []string{"a", "aa"}
+	// s := "ababba"
+	// substrs := []string{"baba", "ba", "abba"}
 	s := ""
 	n := 0
 	fmt.Scanf("%s\n%d\n", &s, &n)
