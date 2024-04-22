@@ -5,8 +5,8 @@ import (
 	"sort"
 )
 
-// suffix array with sorting
-// O(n log^2n)
+// suffix array with radix sorting
+// O(n log n)
 func Solution2(s string) []int {
 	s += "$"
 	n := len(s)

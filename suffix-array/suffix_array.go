@@ -2,5 +2,5 @@ package main
 
 // https://codeforces.com/edu/course/2/lesson/2/3/
 func main() {
-	Solution2Main()
+	Solution3_2Main()
 }
