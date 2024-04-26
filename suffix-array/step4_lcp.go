@@ -107,14 +107,14 @@ func Solution4(s string) ([]int, []int) {
 }
 
 func Solution4Main() {
-	s := "ababba"
-	// s := ""
-	// n := 0
-	// fmt.Scanf("%s\n%d\n", &s, &n)
-	// substrs := make([]string, n)
-	// for i := 0; i < n; i++ {
-	// 	fmt.Scanf("%s\n", &substrs[i])
-	// }
+	// s := "ababba"
+	s := ""
+	n := 0
+	fmt.Scanf("%s\n%d\n", &s, &n)
+	substrs := make([]string, n)
+	for i := 0; i < n; i++ {
+		fmt.Scanf("%s\n", &substrs[i])
+	}
 	p, lcp := Solution4(s)
 	s += "$"
 	for i := 0; i < len(s); i++ {
