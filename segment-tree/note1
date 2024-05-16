@@ -1,2 +1,3 @@
 set(i, v) // a[i] = v                   O(log n)
 sum(l, r) // sum from a[l] to a[r-1]    O(log n)
+min(l, r) // min(a[l .. r-1])            
